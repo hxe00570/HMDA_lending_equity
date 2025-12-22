@@ -1,7 +1,6 @@
 # Fair Lending Analytics and Disparity Framework
 
 ## Overview
-This repository contains research artifacts for my Ph.D. application. 
 
 The analysis focuses on:
 - Mortgage approval rate disparities across states and metropolitan areas.
