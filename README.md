@@ -32,7 +32,6 @@ The analysis focuses on:
 3. Grab the raw data:
    ```bash
    TIGER/Line Shapefiles
-   ```bash
    HMDA raw data files
 
 ## From Source
