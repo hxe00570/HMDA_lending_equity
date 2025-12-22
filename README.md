@@ -9,7 +9,7 @@ The analysis focuses on:
 - Econometric modeling and geospatial visualization.
 
 ## Contents
-- **ivy.py**: Python notebook performing HMDA data analysis.
+- **hdma_loan_analysis.py**: Python notebook performing HMDA data analysis.
 - **data/**: CSV outputs including approval rates, gender gap summaries, and regression results.
 - **visuals/**: Choropleth maps, heatmaps, and statistical plots.
 - **framework/**: Mind map illustrating the Fair Lending Analytics and Disparity Framework.
