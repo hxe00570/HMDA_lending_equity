@@ -25,6 +25,13 @@ The analysis focuses on:
    ```bash
    git clone https://github.com/hxe00570/HMDA_lending_equity.git
 
+2. Install dependencies:
+  pip install pandas numpy statsmodels geopandas matplotlib seaborn
+
+3. Grab the raw data:
+- TIGER/Line Shapefiles
+- HMDA raw data files
+
 ## From Source
 As you will see in the code I used colab tools to read this data from google drive. The raw data file is incredibly large and an improvement would be to use the API call. I would like to explore trends over time and this will be much more efficient.
 
