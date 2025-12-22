@@ -26,7 +26,7 @@ The analysis focuses on:
    git clone https://github.com/hxe00570/HMDA_lending_equity.git
 
 2. Install dependencies:
-  pip install pandas numpy statsmodels geopandas matplotlib seaborn
+- pip install pandas numpy statsmodels geopandas matplotlib seaborn
 
 3. Grab the raw data:
 - TIGER/Line Shapefiles
