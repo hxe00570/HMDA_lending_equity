@@ -24,7 +24,7 @@ The analysis focuses on:
 ## How to Reproduce
 1. Clone the repository:
    ```bash
-   git clone https://github.com/<your-username>/hmda-loan-equity-analysis.git
+   git clone https://github.com/hxe00570/HMDA_lending_equity.git
 
 ## From Source
 As you will see in the code I used colab tools to read this data from google drive. The raw data file is incredibly large and an improvement would be to use the API call. I would like to explore trends over time and this will be much more efficient.
