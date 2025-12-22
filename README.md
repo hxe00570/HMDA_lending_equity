@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Fair Lending Analytics and Disparity Framework
 
 ## Overview
