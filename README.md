@@ -34,7 +34,7 @@ The analysis focuses on:
    HMDA raw data files
 
 ## From Source
-As you will see in the code I used colab tools to read this data from google drive. The raw data file is incredibly large and an improvement would be to use the API call. I would like to explore trends over time and this will be much more efficient.
+I used colab tools to read this data from google drive. The raw data file is large and an improvement would be to use the API call and review of other variables as well as incorporating trends over time. 
 
 TIGER/Line Shapefiles
 Format:
