@@ -5,6 +5,7 @@
 The analysis focuses on:
 - Mortgage approval rate disparities across states and metropolitan areas.
 - Gender-based differences in loan pricing (rate spreads).
+- Intersectional Race & Gender distributions in debt_to_income, loan_to_value_ratio, laon_amount, and rate_spread
 - Econometric modeling and geospatial visualization.
 
 ## Contents
