@@ -9,7 +9,9 @@ The analysis focuses on:
 - Econometric modeling and geospatial visualization.
 
 ## Contents
-- **hdma_loan_analysis.py**: Python notebook performing HMDA data analysis.
+- **hdma_loan_analysis_gender_geo.py**: Python notebook performing exploratory of HMDA data analysis by gender and geography.
+- **hmda_loan_analysis_gender_race.py**: Python notebook performing exploratory HMDA data analysis by gender and race.
+- **tapping_apis.py**: [In Development] Python notebook to establish API connections to HMDA, Census, and Bureau of Labor Statistics. 
 - **data/**: CSV outputs including approval rates, gender gap summaries, and regression results.
 - **visuals/**: Choropleth maps, heatmaps, and statistical plots.
 - **framework/**: Mind map illustrating the Fair Lending Analytics and Disparity Framework.
