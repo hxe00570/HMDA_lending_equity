@@ -10,8 +10,6 @@ The analysis focuses on:
 
 ## Contents
 - **hdma_loan_analysis_gender_geo.py**: Python notebook performing exploratory of HMDA data analysis by gender and geography.
-- **hmda_loan_analysis_gender_race.py**: Python notebook performing exploratory HMDA data analysis by gender and race.
-- **tapping_apis.py**: [In Development] Python notebook to establish API connections to HMDA, Census, and Bureau of Labor Statistics. 
 - **data/**: CSV outputs including approval rates, gender gap summaries, and regression results.
 - **visuals/**: Choropleth maps, heatmaps, and statistical plots.
 - **framework/**: Mind map illustrating the Fair Lending Analytics and Disparity Framework.
@@ -51,4 +49,7 @@ HMDA Dataset Filtering
 You can use the HMDA Data Browser to filter and download CSV files of HMDA data. These files contain all data fields available in the public data record and can be used for advanced analysis. You can also access the Data Browser API directly. For questions/suggestions, contact hmdahelp@cfpb.gov.
 https://ffiec.cfpb.gov/data-browser/data/2024?category=states 
 
+## Related Work
 
+- **HMDA Mortgage Application Characteristics by Gender & Race**: Exploratory HMDA data analysis by gender and race.
+- **Tapping APIs**: [In Development] Python notebook to establish API connections to HMDA, Census, and Bureau of Labor Statistics.
