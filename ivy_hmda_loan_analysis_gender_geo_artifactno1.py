@@ -33,15 +33,6 @@ TIGER/Line Shapefiles Format: The core TIGER/Line Files and Shapefiles do not in
 
 HMDA Dataset: These files contain all data fields available in the public data record and can be used for advanced analysis. There is also an API. For questions/suggestions, contact hmdahelp@cfpb.gov. https://ffiec.cfpb.gov/data-browser/data/2024?category=states
 
-The accompanying notebooks in this series are:
-- [Artifcat No. 1: HMDA Gender and Geography](https://colab.research.google.com/drive/1bIIbRIASm6mOUk4jteGboGExWRyL6tDe?usp=sharing)
-- [Artifcat No. 2: HMDA Loan Characteristics by Race & Gender](https://colab.research.google.com/drive/1w6yQhZUyiMK5FvECOKzvpNa8FClOQ0KU?usp=sharing)
-- [Artifact No. 3: Tapping APIs for Multi-Year Analysis](https://colab.research.google.com/drive/1f2zZ_LIhGzuQVhrdgqVDT8nR3ff6DXze?usp=sharing)
-
-Github Repos:
-- [HMDA Lending Equity](https://github.com/hxe00570/HMDA_lending_equity)
-- [HMDA Loan Characteristics](https://colab.research.google.com/drive/1bIIbRIASm6mOUk4jteGboGExWRyL6tDe?usp=sharing)
-
 # 2024 HMDA Loan Application Analysis
 
 This analysis of `2024 Home Mortgage Disclosure Act (HMDA)` data shows mortgage approval rates, loan pricing, and geographical patterns for single-party applicants. The global approval rate for single-family, owner-occupied mortgage applicants in the states and territories sampled is just shy of 60%. However, approval rates vary significantly across geographies, with Wisconsin and North Dakota showing the highest rates, while Louisiana and Mississippi have some of the lowest.
@@ -52,7 +43,7 @@ Geographically, this disparity is not uniform. While some states like Mississipp
 
 While these findings are interesting, they are limited to a single year and notably this dataset does not include any information on applicant credit score or income. Finally, I only considered `approved` loans for `residential` occupancy and held fixed `debt_to_income_ratio`, `loan_to_value_ratio`, `reason_for_denial` or `loan_amount` among other variables.
 
-In a related analysis (Artifact No.2) I examine `loan_amount`, `loan_to_value_ratio`, `rate_spread`, and `debt_to_income_ratio` by `derived_sex` and `derived_race`. It appears that single-men apply for a higher average `loan_amount` than single-female applicants, an observation that held true across racial groups. More research would be needed to examine the significance of this relationship. Artifact No. 3 begins the next step of aggregating multi-year data and identifying additional data sources to further this analysis.
+In a related analysis (Artifact No.2) I examine `loan_amount`, `loan_to_value_ratio`, `rate_spread`, and `debt_to_income_ratio` by `derived_sex` and `derived_race`. It appears that single-men apply for a higher average `loan_amount` than single-female applicants, an observation that held true across racial groups. More research would be needed to examine the significance of this relationship.
 
 ### 0) Setup: Mount Drives | Create Output Folders | Build Helper Functions
 
@@ -181,12 +172,12 @@ print(df_geo.tail())
 
 """### 4) Normalize Codes, Rename MSA, Filters & Flags
 
-This next bit cleans up and ensures the data is ready for analysis, so I do a few key things here:
-- First, rename that `derived_msa-md` column to `derived_msa_md` it just makes it easier to work with in our code and I hit errors working with this variable in `matplotlib`.
+This next bit cleans up and ensures the data is ready for analysis, so we'll do a few key things here:
+- First, rename that `derived_msa-md` column to `derived_msa_md` – it just makes it easier to work with in our code and I hit errors working with this variable in `matplotlib`.
 - Some of our categories, like `loan_purpose` and `loan_type`, will be transformed into numbers so they play nicely with the tests we want to run next.
-- Then, some filtering since the cohort I run the tests on should have the data we need available for the records included in our study population. In this case, I am interested in residential purchases of single-family homes 1-4 units by single purchasers.
+- Then, some filtering since the cohort we run the tests on should have the data we need available for the records included in our study population. In this case, I am interested in residential purchases of single-family homes 1-4 units by single purchasers.
 - Add a simple 'yes/no' flags: one for 'approved' loans, and others to easily spot `female_app` and `male_app` in our statistical models.
-- A quick conversion for pricing and loan term details turning them into numbers.
+- A quick conversion for pricing and loan term details – turning them into numbers.
 - Finally, save all this neatly filtered data as a Parquet file.
 
 
@@ -707,7 +698,7 @@ def plot_choropleth_with_labels(
 
 """### 13) Render Choropleth Maps
 
-This section calls the `plot_choropleth_with_labels` helper function to generate four different choropleth maps.
+This section uses calls the plot_choropleth_with_labels helper function to generate four different choropleth maps.
 
 - State-level Quantile Map: This one shows approval rates by state, dividing them into equal groups based on the number of observations
 - State-level Fixed Breaks Map: visualizing state approval rates using custom, pre-defined ranges.
@@ -815,7 +806,7 @@ plt.show()
 
 """### 15) Sanity Check
 
-Time for a quick check-up! This section performs a 'sanity check' on the data and the environment. Print out the versions of all the key Python libraries we're using (like `NumPy`, `pandas`, `GeoPandas`, `Shapely`, and `mapclassify`).
+Time for a quick check-up! This section performs a 'sanity check' on our data and the environment. Print out the versions of all the key Python libraries we're using (like `NumPy`, `pandas`, `GeoPandas`, `Shapely`, and `mapclassify`).
 
 Quick summary statistics on our filtered HMDA cohort, including the total number of rows, applications, and approvals, plus the overall approval rate. Display the counts of approved applications that have valid rate spread data, broken down by applicant gender.
 
@@ -1294,3 +1285,56 @@ plt.tight_layout()
 plt.savefig('output/figures/approval_rate_heatmap_state_program_diverging.png', dpi=300)
 plt.show()
 print("Saved: approval_rate_heatmap_state_program_diverging.png")
+
+"""### Data Analysis
+
+*   The overall approval rate for filtered loan applications (purchase loans, owner-occupied, single-family site-built homes) was **56.0%**.
+*   Approval rates varied significantly by state, with Wisconsin (69.4%) and North Dakota (66.6%) demonstrating top performance, while Louisiana (53.5%) and Arkansas (51.8%) were among the lower-tier states.
+*   An unadjusted analysis showed female applicants received, on average, **1.42 basis points (bps) lower rate spreads** than male applicants, a statistically significant difference.
+*   After controlling for various factors through fixed-effects models, this "female effect" persisted, with female applicants receiving **3.51 bps lower rate spreads** in state-level models and **3.18 bps lower** in metropolitan statistical area (MSA)-level models.
+*   The adjusted "female effect" was consistently negative across loan programs: Conventional (-3.55 to -3.51 bps), FHA (-2.01 to -1.61 bps), VA (-5.39 to -4.06 bps), and USDA (-5.33 to -3.84 bps), with VA loans showing the largest difference.
+*   State-level t-tests, corrected for False Discovery Rate, revealed regional heterogeneity: females received significantly *lower* rate spreads in states like Mississippi (-23.45 bps) and Connecticut (-12.17 bps), but significantly *higher* rate spreads in states such as Florida (+15.53 bps) and Texas (+13.67 bps).
+*   Geographical analyses via heatmaps illustrated substantial variations in approval rates and gender-based disparities across states, MSAs, and different loan programs, indicating complex interplay of factors.
+
+### Insights or Next Steps
+
+*   The persistent "female effect" showing lower rate spreads for female applicants, even after extensive controls, suggests potential underlying systemic factors or unobserved characteristics contributing to this disparity, warranting further investigation into its causes and implications for fair lending practices.
+*   The significant regional variations in both approval rates and gender-based rate spread disparities (e.g., females paying higher rates in some states) indicate that targeted interventions or policy reviews may be necessary at the state or MSA level to address localized inequities.
+
+### Key Talking Points
+
+This analysis of the 2024 HMDA loan application data reveals several critical insights regarding loan approval rates, gender disparities in rate spreads, and geographical patterns.
+
+**Overall Approval Rates:**
+*   The overall approval rate for the filtered cohort (single-family, owner-occupied, purchase loans) is approximately **56.0%**. (from cell 0ie8psVEoM45)
+
+**State-Level Approval Variations:**
+*   Approval rates vary significantly across states. For instance, Wisconsin (0.69) and North Dakota (0.67) show the highest approval rates among states with sufficient applications, while Louisiana (0.54) and Mississippi (0.52) are among the lowest. (from `robust_rank` dataframe, cell En08Z8MRlbQx)
+*   Visualizations (choropleth maps and bar charts) clearly demonstrate these regional differences. (from cells qs16H7m6l2BO, 2iK3_KI6l3br)
+
+**Unadjusted Gender Disparity in Rate Spreads:**
+*   An unadjusted Welch's t-test on winsorized rate spread data for approved loans shows that, on average, **female applicants have a rate spread -1.42 basis points lower than male applicants**, with a statistically significant p-value of 8.39e-13. (from cell MrXKds0mldPc)
+    *   Female mean rate spread: 0.0703
+    *   Male mean rate spread: 0.0845
+
+**Adjusted Gender Disparity (Fixed Effects Models):**
+*   **State-level fixed effects model**: After controlling for loan amount, income, loan-to-value ratio, debt-to-income ratio, loan type, and state-specific factors, female applicants still show a statistically significant **-3.51 bps lower rate spread** than male applicants (95% CI: -5.00 to -2.03 bps). (from `summ_df_fixed` dataframe, cell TVmhE2Etlf83)
+*   **MSA-level fixed effects model**: Similarly, after controlling for MSA-specific factors, female applicants have a statistically significant **-3.18 bps lower rate spread** than male applicants (95% CI: -4.07 to -2.30 bps). (from `summ_df_fixed` dataframe, cell TVmhE2Etlf83)
+
+**Program-Specific Gender Effects:**
+*   The female effect on rate spreads varies by loan program:
+    *   **Conventional loans**: Female applicants have **-3.55 bps lower rate spread** (State FE) and **-3.51 bps lower rate spread** (MSA FE) compared to males.
+    *   **FHA loans**: Female applicants have **-2.01 bps lower rate spread** (State FE) and **-1.61 bps lower rate spread** (MSA FE) compared to males.
+    *   **VA loans**: Female applicants have **-5.39 bps lower rate spread** (State FE) and **-4.06 bps lower rate spread** (MSA FE) compared to males.
+    *   **USDA loans**: Female applicants have **-5.33 bps lower rate spread** (State FE) and **-3.84 bps lower rate spread** (MSA FE) compared to males.
+    *   (from `prog_summ_fixed` dataframe and `df` for plot, cells W4Gg4Wvvvf14, ooW-1__-lgrG, TgxpN3f817s8)
+
+**State-Level Gender Disparities (FDR Corrected):**
+*   At the individual state level, several states show statistically significant differences in unadjusted rate spreads between female and male applicants after False Discovery Rate correction.
+    *   States where females pay *lower* rates: Mississippi (-23.45 bps), Connecticut (-12.17 bps), Massachusetts (-12.13 bps), Minnesota (-11.04 bps), and North Dakota (-9.01 bps).
+    *   States where females pay *higher* rates: New York (+13.33 bps), New Mexico (+10.84 bps), Maryland (+10.39 bps), and Illinois (+9.27 bps).
+    *   (from `state_tests` dataframe, cell 8BpsxjfZllo3)
+
+**Geographical Patterns in Heatmaps:**
+*   Heatmaps visualizing approval rates by state/MSA and loan program reveal distinct geographical patterns and program-specific performance differences. Some states/MSAs consistently perform better or worse across multiple loan types. (from cells T58UtKYEJtyo, hccSU70sP2-u, XHs2obopXBVJ, 7AoBvPq5ZoU0, lXRlJjaaa78K)
+"""
